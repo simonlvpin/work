@@ -3,26 +3,591 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMON'S HOME</title>
+    <title>SIMON'S HOME - 吕品聊数据</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            gap: 2rem;
+            flex-wrap: wrap;
         }
-        h1 {
+
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #764ba2;
+        }
+
+        /* Header Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .social-links a:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Sections */
+        section {
+            background: white;
+            margin: 3rem auto;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 1100px;
+        }
+
+        section h2 {
+            color: #667eea;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        section h2 i {
+            color: #764ba2;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .about-avatar {
+            text-align: center;
+        }
+
+        .avatar-circle {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            margin: 0 auto;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .article-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .article-card .date {
+            color: #999;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Videos Grid */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-thumbnail {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-info h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .watch-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .watch-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 2rem;
+            background: #f5f7fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .contact-item i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item:hover i {
+            color: white;
+        }
+
+        .contact-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
             color: white;
             text-align: center;
-            font-size: 48px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            section {
+                padding: 2rem 1rem;
+                margin: 2rem auto;
+            }
+
+            .articles-grid,
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>我的第一个 Github Pages 网站</h1>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">首页</a></li>
+            <li><a href="#about">关于我</a></li>
+            <li><a href="#articles">文章</a></li>
+            <li><a href="#videos">视频</a></li>
+            <li><a href="#contact">联系方式</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>🚀 SIMON'S HOME</h1>
+        <p>欢迎来到我的个人主页</p>
+        <p style="font-size: 1.1rem; opacity: 0.9;">数据分析 | 数据思维 | 数据应用</p>
+        <div class="social-links">
+            <a href="#articles" title="微信公众号"><i class="fas fa-newspaper"></i></a>
+            <a href="#videos" title="视频号"><i class="fas fa-video"></i></a>
+            <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://weixin.qq.com" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container">
+        <h2><i class="fas fa-user-circle"></i> 关于我</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Hi, 我是 SIMON</h3>
+                <p>
+                    热爱数据分析和数据思维应用。致力于用简单清晰的方式解读数据背后的故事，
+                    让更多人理解数据、运用数据。
+                </p>
+                <p>
+                    通过微信公众号《吕品聊数据》和微信视频号，我分享数据分析的案例、方法和工具，
+                    帮助大家在工作和生活中做出更好的数据驱动决策。
+                </p>
+                <p>
+                    如果你对数据感兴趣，欢迎关注我的公众号和视频号！
+                </p>
+            </div>
+            <div class="about-avatar">
+                <div class="avatar-circle">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <p style="margin-top: 1rem; color: #667eea; font-weight: 600;">数据分析爱好者</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section id="articles" class="container">
+        <h2><i class="fas fa-newspaper"></i> 微信公众号 - 吕品聊数据</h2>
+        <p style="color: #666; margin-bottom: 1.5rem;">
+            在公众号中分享数据分析案例、工具教程和行业洞察，欢迎关注订阅
+        </p>
+        <div class="articles-grid">
+            <div class="article-card">
+                <h4>📊 数据可视化最佳实践</h4>
+                <p class="date">2024年5月15日</p>
+                <p>分享如何通过有效的数据可视化设计，让数据更直观、更有说服力。包括图表选择、色彩搭配等核心要点。</p>
+            </div>
+            <div class="article-card">
+                <h4>💡 Excel 高级技巧分享</h4>
+                <p class="date">2024年5月10日</p>
+                <p>深入讲解 Excel 中的高级功能，如数据透视表、公式优化和自动化脚本，提高你的数据处理效率。</p>
+            </div>
+            <div class="article-card">
+                <h4>🔍 如何进行有效的数据探索</h4>
+                <p class="date">2024年5月5日</p>
+                <p>介绍数据探索性分析（EDA）的方法论和工具，帮助你快速理解数据特征并发现隐藏的规律。</p>
+            </div>
+            <div class="article-card">
+                <h4>📈 业务数据分析框架</h4>
+                <p class="date">2024年4月30日</p>
+                <p>构建系统的数据分析框架，如何设定合理的KPI，建立数据监控体系，支撑业务决策。</p>
+            </div>
+            <div class="article-card">
+                <h4>🎯 A/B测试完全指南</h4>
+                <p class="date">2024年4月25日</p>
+                <p>讲解 A/B 测试的设计原理、样本量计算、结果分析方法，确保你的实验设计科学有效。</p>
+            </div>
+            <div class="article-card">
+                <h4>🚀 数据驱动决策案例分析</h4>
+                <p class="date">2024年4月20日</p>
+                <p>通过真实案例展示如何使用数据驱动业务决策，包括电商、互联网、金融等多个行业的应用。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="videos" class="container">
+        <h2><i class="fas fa-video"></i> 微信视频号 - 吕品聊数据</h2>
+        <p style="color: #666; margin-bottom: 1.5rem;">
+            短视频形式的数据分析知识分享，让你碎片化时间也能学到实用技能
+        </p>
+        <div class="videos-grid">
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="video-info">
+                    <h4>📊 5分钟学会数据透视表</h4>
+                    <p>用实际数据演示如何快速构建数据透视表，帮助你秒懂数据聚合。</p>
+                    <button class="watch-btn">查看视频 →</button>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="video-info">
+                    <h4>🎨 好看的图表这样做</h4>
+                    <p>展示如何利用色彩和布局制作专业级的数据可视化图表。</p>
+                    <button class="watch-btn">查看视频 →</button>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="video-info">
+                    <h4>💡 数据思维案例拆解</h4>
+                    <p>通过具体案例讲解如何用数据思维分析和解决实际问题。</p>
+                    <button class="watch-btn">查看视频 →</button>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <div class="video-info">
+                    <h4>📐 Excel 公式速成攻略</h4>
+                    <p>讲解最常用的 Excel 公式和函数，让数据处理更高效。</p>
+                    <button class="watch-btn">查看视频 →</button>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <div class="video-info">
+                    <h4>🎯 KPI 指标体系设计</h4>
+                    <p>如何为你的业务建立合理的关键指标体系和监控机制。</p>
+                    <button class="watch-btn">查看视频 →</button>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+                <div class="video-info">
+                    <h4>🔎 数据背后的故事</h4>
+                    <p>每期深挖一个数据案例，发现数据背后的故事和商业价值。</p>
+                    <button class="watch-btn">查看视频 →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container">
+        <h2><i class="fas fa-envelope"></i> 联系方式</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+            欢迎通过以下方式与我联系和交流
+        </p>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <i class="fab fa-weixin"></i>
+                <h4>微信公众号</h4>
+                <p>吕品聊数据</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">长期分享数据分析干货</p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-video"></i>
+                <h4>微信视频号</h4>
+                <p>吕品聊数据</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">短视频知识分享</p>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-github"></i>
+                <h4>GitHub</h4>
+                <p>@Simon</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">代码和项目分享</p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <h4>邮箱</h4>
+                <p>your@email.com</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">商务合作咨询</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 SIMON'S HOME. All rights reserved.</p>
+        <p>🌟 感谢访问，欢迎关注《吕品聊数据》 🌟</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
